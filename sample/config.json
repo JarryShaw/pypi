@@ -1,0 +1,22 @@
+{
+    "fake-dummy": {
+        "module": "dummy",
+        "module-name": "real-dummy",
+        "version": "0.1.0",
+        "author": "Nobody",
+        "author-email": "nobody@foo.com",
+        "maintainer": "Another",
+        "maintainer-email": "another@bar.com",
+        "url": "https://github.com/nobody/dummy"
+    },
+    "fake-dummy2": {
+        "module": "dummy2",
+        "module-name": "real-dummy2",
+        "version": "1.0.0",
+        "author": "Somebody",
+        "author-email": "somebody@foo.com",
+        "maintainer": "Anyone",
+        "maintainer-email": "anyone@bar.com",
+        "url": "https://github.com/somebody/dummy2"
+    }
+}
