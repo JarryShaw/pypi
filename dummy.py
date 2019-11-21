@@ -106,6 +106,25 @@ class Dummy:
             self.parser.error('the following arguments are required: %s/%s' % self.getopt(name))
         return option
 
+    def process_cfg(self, config):
+        """Process parsed configuration."""
+        for name, cfg in config.items():
+            module = self.getkey(cfg, 'module', default=name)
+            module_name = self.getkey(cfg, 'module-name')
+            version = self.getkey(cfg, 'version', default=VERSION)
+            author = self.getkey(cfg, 'author')
+            author_email = self.getkey(cfg, 'author-email')
+            maintainer = self.getkey(cfg, 'maintainer', default=author)
+            maintainer_email = self.getkey(cfg, 'maintainer-email', default=author_email)
+            url = self.getkey(cfg, 'url')
+
+            # generate files
+            self.generate(name=name, version=version, url=url,
+                          module=module, module_name=module_name,
+                          author=author, author_email=author_email,
+                          maintainer=maintainer, maintainer_email=maintainer_email)
+        self._processed = True
+
     def process_ini(self, path):
         """Process INI format configuration file."""
         self.logger.info('processing INI configuration file: %s', path)
@@ -127,22 +146,8 @@ class Dummy:
                 return
         config.remove_section('DEFAULT')
 
-        for name, cfg in config.items():
-            module = self.getkey(cfg, 'module', default=name)
-            module_name = self.getkey(cfg, 'module-name')
-            version = self.getkey(cfg, 'version', default=VERSION)
-            author = self.getkey(cfg, 'author')
-            author_email = self.getkey(cfg, 'author-email')
-            maintainer = self.getkey(cfg, 'maintainer', default=author)
-            maintainer_email = self.getkey(cfg, 'maintainer-email', default=author_email)
-            url = self.getkey(cfg, 'url')
-
-            # generate files
-            self.generate(name=name, version=version, url=url,
-                          module=module, module_name=module_name,
-                          author=author, author_email=author_email,
-                          maintainer=maintainer, maintainer_email=maintainer_email)
-        self._processed = True
+        # traverse config
+        self.process_cfg(config)
 
     def process_yaml(self, path):
         """Process YAML format configuration file."""
@@ -163,22 +168,8 @@ class Dummy:
                 self.logger.error('malformed configuration file: %s (content type is %s)', path, type(config).__name__)
                 continue
 
-            for name, cfg in config.items():
-                module = self.getkey(cfg, 'module', default=name)
-                module_name = self.getkey(cfg, 'module-name')
-                version = self.getkey(cfg, 'version', default=VERSION)
-                author = self.getkey(cfg, 'author')
-                author_email = self.getkey(cfg, 'author-email')
-                maintainer = self.getkey(cfg, 'maintainer', default=author)
-                maintainer_email = self.getkey(cfg, 'maintainer-email', default=author_email)
-                url = self.getkey(cfg, 'url')
-
-                # generate files
-                self.generate(name=name, version=version, url=url,
-                              module=module, module_name=module_name,
-                              author=author, author_email=author_email,
-                              maintainer=maintainer, maintainer_email=maintainer_email)
-        self._processed = True
+            # traverse config
+            self.process_cfg(config)
 
     def process_json(self, path):
         """Process JSON format configuration file."""
@@ -198,22 +189,8 @@ class Dummy:
             self.logger.error('malformed configuration file: %s (content type is %s)', path, type(config).__name__)
             return
 
-        for name, cfg in config.items():
-            module = self.getkey(cfg, 'module', default=name)
-            module_name = self.getkey(cfg, 'module-name')
-            version = self.getkey(cfg, 'version', default=VERSION)
-            author = self.getkey(cfg, 'author')
-            author_email = self.getkey(cfg, 'author-email')
-            maintainer = self.getkey(cfg, 'maintainer', default=author)
-            maintainer_email = self.getkey(cfg, 'maintainer-email', default=author_email)
-            url = self.getkey(cfg, 'url')
-
-            # generate files
-            self.generate(name=name, version=version, url=url,
-                          module=module, module_name=module_name,
-                          author=author, author_email=author_email,
-                          maintainer=maintainer, maintainer_email=maintainer_email)
-        self._processed = True
+        # traverse config
+        self.process_cfg(config)
 
     def process_file(self, path, format):  # pylint: disable=inconsistent-return-statements, redefined-builtin
         """Process configuration file."""
