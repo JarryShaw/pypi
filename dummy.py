@@ -30,7 +30,7 @@ except ImportError:
 try:
     import yaml
     try:
-        from yaml import CLoader as Loader
+        from yaml import CSafeLoader as Loader
     except ImportError:
         from yaml import SafeLoader as Loader
 except ImportError:
