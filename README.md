@@ -1,9 +1,9 @@
 # Dummy repository for PyPI registration
 
 ```
-$ python dummy.py --help
-usage: dummy [-h] [-o OUTPUT] [-f] [-v] [-j JSON] [-y YAML] [-i INI] [-n NAME]
-             [-m MODULE] [-M MODULE_NAME] [-V VERSION] [-a AUTHOR]
+$ dummy --help
+usage: dummy [-h] [-o OUTPUT] [-f] [-r] [-v] [-j JSON] [-y YAML] [-i INI]
+             [-n NAME] [-m MODULE] [-M MODULE_NAME] [-V VERSION] [-a AUTHOR]
              [-A AUTHOR_EMAIL] [-t MAINTAINER] [-T MAINTAINER_EMAIL] [-u URL]
 
 dummy package generator
@@ -13,6 +13,7 @@ optional arguments:
   -o OUTPUT, --output OUTPUT
                         output folder
   -f, --force           force generation even if package exists
+  -r, --raise           raise error at runtime instead of reinstall
   -v, --verbose         give more output; option is additive
 
 File configuration:

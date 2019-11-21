@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 """Please directly install `%(module_name)s` instead."""
 
+from __future__ import print_function, unicode_literals
+
+import os
 import warnings
+import sys
 from distutils.command.install import install
 
 # version string
@@ -11,9 +15,26 @@ __version__ = '%(version)s'
 class Install(install):
     """Magic install command."""
 
+    def check_call(self, cmd):  # pylint: disable=no-self-use
+        """Wrapper for functionality of `subprocess.check_call`."""
+        return_code = os.system(cmd)
+        if return_code != 0:
+            raise OSError('[EXIT %%s] %%s' %% (return_code, cmd))
+
     def run(self):  # pylint: disable=no-self-use
-        raise RuntimeError('This is a dummy package for `%(module_name)s`. '
-                           'Please directly install `%(module_name)s` instead.')
+        if %(raise_flag)s:
+            raise RuntimeError('This is a dummy package for `%(module_name)s`. '
+                               'Please directly install `%(module_name)s` instead.')
+        else:
+            print(u'This is a dummy package for `%(module_name)s`.', file=sys.stderr)
+            print(u'Trying to reinstall...', file=sys.stderr)
+            try:
+                self.check_call('%%s -m pip install %(module_name)s' %% sys.executable)
+            except OSError:
+                print(u'Failed to reinstall...', file=sys.stderr)
+                print(u'Please directly install `%(module_name)s` instead.', file=sys.stderr)
+                raise
+            print(u'Successfully reinstalled...', file=sys.stderr)
 
 
 # setup attributes
@@ -39,7 +60,11 @@ attrs = dict(
     # script_args
     # options
     license='The Unlicensed',
-    # keywords
+    keywords=[
+        'dummy',
+        '%(module)s',
+        '%(module_name)s',
+    ],
     platforms=[
         'any'
     ],
@@ -84,7 +109,7 @@ try:
         # password
         # fullname
         long_description_content_type='text/markdown',
-        #python_requires
+        # python_requires
         zip_safe=True,
     ))
 except ImportError:
