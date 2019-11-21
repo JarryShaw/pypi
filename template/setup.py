@@ -2,13 +2,19 @@
 """Please directly install `%(module_name)s` instead."""
 
 import warnings
-
-# warn about the package
-warnings.warn('This is a dummy package for `%(module_name)s`. '
-              'Please directly install `%(module_name)s` instead.')
+from distutils.command.install import install
 
 # version string
 __version__ = '%(version)s'
+
+
+class Install(install):
+    """Magic install command."""
+
+    def run(self):  # pylint: disable=no-self-use
+        raise RuntimeError('This is a dummy package for `%(module_name)s`. '
+                           'Please directly install `%(module_name)s` instead.')
+
 
 # setup attributes
 attrs = dict(
@@ -37,7 +43,9 @@ attrs = dict(
     platforms=[
         'any'
     ],
-    # cmdclass
+    cmdclass=dict(
+        install=Install,
+    ),
     # data_files
     # package_dir
     # obsoletes
@@ -84,3 +92,7 @@ except ImportError:
 
 # set-up script for pip distribution
 setup(**attrs)
+
+# warn about the package
+warnings.warn('This is a dummy package for `%(module_name)s`. '
+              'Please directly install `%(module_name)s` instead.')

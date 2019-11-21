@@ -15,7 +15,7 @@ try:
     try:
         from yaml import CLoader as Loader
     except ImportError:
-        from yaml import Loader
+        from yaml import SafeLoader as Loader
 except ImportError:
     yaml = None
 
@@ -109,6 +109,10 @@ class Dummy:
     def process_cfg(self, config):
         """Process parsed configuration."""
         for name, cfg in config.items():
+            # skip default section of ConfigParser
+            if name == configparser.DEFAULTSECT:
+                continue
+
             module = self.getkey(cfg, 'module', default=name)
             module_name = self.getkey(cfg, 'module-name')
             version = self.getkey(cfg, 'version', default=VERSION)
@@ -144,7 +148,6 @@ class Dummy:
             except configparser.Error as error:
                 self.logger.error('malformed configuration file: %s (%s)', path, error)
                 return
-        config.remove_section('DEFAULT')
 
         # traverse config
         self.process_cfg(config)
@@ -163,13 +166,13 @@ class Dummy:
                 self.logger.error('malformed configuration file: %s (%s)', path, error)
                 return
 
-        for config in documents:
-            if not isinstance(config, dict):
-                self.logger.error('malformed configuration file: %s (content type is %s)', path, type(config).__name__)
-                continue
+            for config in documents:
+                if not isinstance(config, dict):
+                    self.logger.error('malformed configuration file: %s (content type is %s)', path, type(config).__name__)
+                    continue
 
-            # traverse config
-            self.process_cfg(config)
+                # traverse config
+                self.process_cfg(config)
 
     def process_json(self, path):
         """Process JSON format configuration file."""

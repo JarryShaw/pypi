@@ -5,6 +5,11 @@ from __future__ import print_function, unicode_literals
 
 import os
 import sys
+import warnings
+
+# warn about the package
+warnings.warn('This is a dummy package for `%(module_name)s`. '
+              'Please directly install `%(module_name)s` instead.', RuntimeWarning)
 
 
 def check_call(cmd):
