@@ -4,6 +4,7 @@
         "aktau",
         "cmdclass",
         "datefmt",
-        "gaocegege"
+        "gaocegege",
+        "simplejson"
     ]
 }
