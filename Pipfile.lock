@@ -183,11 +183,11 @@
         },
         "pylint": {
             "hashes": [
-                "sha256:647fa5882fd49d7f34d07d0a23702689d5cf10a81dcd74e79bd524603d40b371",
-                "sha256:d8f9e6ff7bc2e64a724b1b4409f0a30014891fc006ffbf68b590015e364322ec"
+                "sha256:064b486e16f4d8b92405b6529178bc48713c0673322c2e1aca919f75bd76dbf4",
+                "sha256:ad2b3a806fc7261e9bbf858068c10cd6b62b8c59ba9566c4a4ead0db796f8930"
             ],
             "index": "tuna",
-            "version": "==2.9.1"
+            "version": "==2.9.2"
         },
         "python-dummy": {
             "editable": true,
