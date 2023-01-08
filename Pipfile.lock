@@ -154,11 +154,11 @@
     "develop": {
         "astroid": {
             "hashes": [
-                "sha256:a1fbaad9d3e5f2eeb8e3a1d1d6008a081b1aac33ef86ff7742ae0714d92e9cf2",
-                "sha256:b573ed96112061150eade70851c277a92fba544812b781836ab16fedbbddb497"
+                "sha256:9dbe1718881b2925cd60080d879ee41909da20535cb549dff0ec5dec7ed2e6d5",
+                "sha256:d2f2775756807ab136867c9c500556c26eda487930281f61e30e40daecdb8d84"
             ],
             "markers": "python_full_version >= '3.7.2'",
-            "version": "==2.12.14"
+            "version": "==2.13.1"
         },
         "autopep8": {
             "hashes": [
